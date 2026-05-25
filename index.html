@@ -62,22 +62,21 @@ nav{position:sticky;top:0;z-index:200;border-bottom:1px solid var(--border);back
 .j-pct-lbl{font-family:'DM Mono',monospace;font-size:10px;color:var(--muted);letter-spacing:1.5px;text-align:right;margin-top:4px;text-transform:uppercase;}
 
 /* track */
-.j-track-wrap{margin-bottom:72px;}
+.j-track-wrap{margin-bottom:16px;}
 .j-track{width:100%;height:3px;background:var(--border-l);border-radius:2px;position:relative;overflow:visible;}
 .j-fill{height:100%;border-radius:2px;background:var(--gold);width:0%;transition:width 1.8s cubic-bezier(.22,1,.36,1);position:relative;}
 .j-fill::after{content:'';position:absolute;right:-1px;top:50%;transform:translateY(-50%);width:12px;height:12px;border-radius:50%;background:var(--gold);box-shadow:0 0 0 3px rgba(245,166,35,.2);animation:gpulse 2s infinite;}
 @keyframes gpulse{0%,100%{box-shadow:0 0 0 3px rgba(245,166,35,.2)}50%{box-shadow:0 0 0 7px rgba(245,166,35,.06)}}
 
-/* milestones — pinned on bar */
-.j-track{overflow:visible !important;}
-.ms{position:absolute;top:50%;transform:translate(-50%,-50%);display:flex;flex-direction:column;align-items:center;z-index:5;}
-.ms-dot{width:10px;height:10px;border-radius:50%;border:1px solid var(--border-l);background:var(--bg);transition:all .4s;flex-shrink:0;}
+/* milestones — evenly spaced below bar, dot color shows progress */
+.j-miles{display:flex;justify-content:space-between;margin-top:18px;}
+.ms{display:flex;flex-direction:column;align-items:center;gap:6px;flex:1;position:relative;}
+.ms-dot{width:9px;height:9px;border-radius:50%;border:1px solid var(--border-l);background:var(--bg-card);transition:background .4s,border-color .4s,box-shadow .4s;flex-shrink:0;}
 .ms.reached .ms-dot{background:var(--gold);border-color:var(--gold);}
 .ms.current .ms-dot{background:var(--gold);border-color:var(--gold);box-shadow:0 0 0 5px rgba(245,166,35,.18);animation:gpulse 2s infinite;}
-.ms-info{position:absolute;top:18px;display:flex;flex-direction:column;align-items:center;gap:2px;pointer-events:none;}
-.ms-amt{font-family:'Bebas Neue',sans-serif;font-size:13px;letter-spacing:.5px;color:var(--dim);white-space:nowrap;}
+.ms-amt{font-family:'Bebas Neue',sans-serif;font-size:13px;letter-spacing:.5px;color:var(--dim);white-space:nowrap;transition:color .4s;}
 .ms.reached .ms-amt,.ms.current .ms-amt{color:var(--gold);}
-.ms-lbl{font-family:'DM Mono',monospace;font-size:9px;letter-spacing:.5px;color:var(--dim);text-align:center;white-space:nowrap;}
+.ms-lbl{font-family:'DM Mono',monospace;font-size:9px;letter-spacing:.5px;color:var(--dim);text-align:center;white-space:nowrap;transition:color .4s;}
 .ms.reached .ms-lbl,.ms.current .ms-lbl{color:var(--gold);}
 
 /* ACCOUNTS TABLE inside journey */
@@ -363,52 +362,41 @@ footer{border-top:1px solid var(--border);padding:22px 0;display:flex;align-item
       </div>
     </div>
 
-    <!-- progress bar -->
+    <!-- progress bar — fill is % of goal, dots are evenly spaced for readability -->
     <div class="j-track-wrap">
       <div class="j-track" id="j-track">
         <div class="j-fill" id="j-fill"></div>
-        <!-- milestone dots pinned directly on the bar -->
-        <div class="ms" data-v="25000"  style="left:2.5%">
+      </div>
+      <div class="j-miles">
+        <div class="ms" data-v="25000">
           <div class="ms-dot"></div>
-          <div class="ms-info">
-            <div class="ms-amt">$25K</div>
-            <div class="ms-lbl">First funded</div>
-          </div>
+          <div class="ms-amt">$25K</div>
+          <div class="ms-lbl">First funded</div>
         </div>
-        <div class="ms" data-v="50000"  style="left:5%">
+        <div class="ms" data-v="50000">
           <div class="ms-dot"></div>
-          <div class="ms-info">
-            <div class="ms-amt">$50K</div>
-            <div class="ms-lbl">Now</div>
-          </div>
+          <div class="ms-amt">$50K</div>
+          <div class="ms-lbl">Now</div>
         </div>
-        <div class="ms" data-v="100000" style="left:10%">
+        <div class="ms" data-v="100000">
           <div class="ms-dot"></div>
-          <div class="ms-info">
-            <div class="ms-amt">$100K</div>
-            <div class="ms-lbl">Next target</div>
-          </div>
+          <div class="ms-amt">$100K</div>
+          <div class="ms-lbl">Next target</div>
         </div>
-        <div class="ms" data-v="200000" style="left:20%">
+        <div class="ms" data-v="200000">
           <div class="ms-dot"></div>
-          <div class="ms-info">
-            <div class="ms-amt">$200K</div>
-            <div class="ms-lbl">Scaling up</div>
-          </div>
+          <div class="ms-amt">$200K</div>
+          <div class="ms-lbl">Scaling up</div>
         </div>
-        <div class="ms" data-v="500000" style="left:50%">
+        <div class="ms" data-v="500000">
           <div class="ms-dot"></div>
-          <div class="ms-info">
-            <div class="ms-amt">$500K</div>
-            <div class="ms-lbl">Half a mil</div>
-          </div>
+          <div class="ms-amt">$500K</div>
+          <div class="ms-lbl">Half a mil</div>
         </div>
-        <div class="ms" data-v="1000000" style="left:100%">
+        <div class="ms" data-v="1000000">
           <div class="ms-dot"></div>
-          <div class="ms-info">
-            <div class="ms-amt">$1M</div>
-            <div class="ms-lbl">The goal</div>
-          </div>
+          <div class="ms-amt">$1M</div>
+          <div class="ms-lbl">The goal</div>
         </div>
       </div>
     </div>
